@@ -25,12 +25,20 @@ const connectToSession = ({ apiKey, sessionId, token }: SessionCredentials): Pro
   new Promise((resolve, reject) => {
     const session = OT.initSession(apiKey, sessionId);
     session.connect(token, (error?: OT.OTError) => {
-      if (error && error.code === 1004) {
-        reject(new e.FailedConnectToSessionTokenError());
-      } else if (error && error.code === 1005) {
-        reject(new e.FailedConnectToSessionSessionIdError());
-      } else if (error && error.code === 1006) {
-        reject(new e.FailedConnectToSessionNetworkError());
+      if (error) {
+        switch (error.name) {
+          case 'OT_AUTHENTICATION_ERROR':
+            reject(new e.FailedConnectToSessionTokenError());
+            break;
+          case 'OT_INVALID_SESSION_ID':
+            reject(new e.FailedConnectToSessionSessionIdError());
+            break;
+          case 'OT_NOT_CONNECTED':
+            reject(new e.FailedConnectToSessionNetworkError());
+            break;
+          default:
+            reject(new e.FailedConnectToSessionOtherError());
+        }
       } else {
         resolve(session);
       }
