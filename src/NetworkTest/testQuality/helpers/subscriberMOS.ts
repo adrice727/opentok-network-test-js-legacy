@@ -136,6 +136,10 @@ export default function subscriberMOS(
       });
     }, MOSState.scoreInterval);
 
-  subscriber.on('destroyed', mosState.clearInterval);
+  subscriber.on('destroyed', () => {
+    if (mosState.intervalId) {
+      mosState.clearInterval();
+    }
+  });
   return mosState;
 }
