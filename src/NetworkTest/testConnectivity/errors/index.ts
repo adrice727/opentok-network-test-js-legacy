@@ -105,19 +105,19 @@ export class FailedToCreateLocalPublisher extends PublishToSessionError {
 
 export class PublishToSessionNotConnectedError extends PublishToSessionError {
   constructor() {
-    super('Precall failed to publish to the session because it was not connected.');
+    super('Failed to publish to the session because it was not connected.');
   }
 }
 
 export class PublishToSessionPermissionOrTimeoutError extends PublishToSessionError {
   constructor() {
-    super('Precall failed to publish to the session due a permissions error or timeout.');
+    super('Failed to publish to the session due a permissions error or timeout.');
   }
 }
 
 export class PublishToSessionNetworkError extends PublishToSessionError {
   constructor() {
-    super('Precall failed to publish to the session due a network error.');
+    super('Failed to publish to the session due a network error.');
   }
 }
 
